@@ -1,0 +1,48 @@
+services:
+  minio:
+    image: minio/minio:latest
+    ports:
+      - '9000:9000'
+      - '9090:9090'
+    volumes:
+      - './data:/data'
+    env_file:
+      - .env
+    command: server --console-address ":9090" /data
+    healthcheck:
+      test:
+        [
+          "CMD",
+          "curl",
+          "-f",
+          "http://localhost:9000/minio/health/live"
+        ]
+      interval: 30s
+      timeout: 20s
+      retries: 3
+
+  drill:
+    env_file:
+      - .env
+    image: apache/drill:latest
+    ports:
+      - '8047:8047'
+      - '31010:31010'
+    volumes:
+      # If needed, override default settings
+      - ./conf/drill/core-site.xml:/opt/drill/conf/core-site.xml
+      # Register default storage plugins
+      - ./conf/drill/storage-plugins-override.conf:/opt/drill/conf/storage-plugins-override.conf
+    stdin_open: true
+    tty: true
+
+  superset_drill:
+    env_file:
+      - .env
+    ports:
+      - '8080:8088'
+    build:
+      context: .
+      dockerfile: superset_drill.Dockerfile
+    volumes:
+      - ./superset.db:/app/superset_home/superset.db
