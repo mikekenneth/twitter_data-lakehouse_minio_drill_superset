@@ -76,7 +76,9 @@ def write_to_bucket(data):
         print(f"Bucket '{MINIO_BUCKET_NAME}' already exists!")
 
     # Put parquet data in the bucket
-    filename = f"{batchDatetime.strftime('%Y/%m/%d')}/elon_tweets_{batchDatetime.strftime('%H%M%S')}_{batchId}.parquet"
+    filename = (
+        f"tweets/{batchDatetime.strftime('%Y/%m/%d')}/elon_tweets_{batchDatetime.strftime('%H%M%S')}_{batchId}.parquet"
+    )
     client.put_object(
         MINIO_BUCKET_NAME, filename, data=BytesIO(file_data), length=len(file_data), content_type="application/csv"
     )

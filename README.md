@@ -15,7 +15,7 @@ A Data Project using Apache-Airflow (Orchestrator) and MinIO(Object Storage like
 ## Getting Started <a name = "getting_started"></a>
 
 Below is a design of the project. (The drawio file can be found in `docs/architecture.drawio`:
-![Twitter Data Project - Architecture](docs/architecture.png)
+![Architecture](docs/architecture.png)
 
 ## Prerequisites
 
@@ -29,6 +29,7 @@ Below is a design of the project. (The drawio file can be found in `docs/archite
 ```bash
 cp sample.env .env
 ```
+
 2. Add the Twitter Bearer Token in the `.env` file as below:
 ```bash
 TWITTER_BEARER_TOKEN="TOKEN-GOES-HERE"
@@ -56,7 +57,7 @@ connection: "s3a://twitter-data"
 
 - If you are using linux, you need to change the permission of `apps/logs/` to allow the container to write to this directory:
 ```bash
-chmod -R 777 app/logs
+chmod -R 777 app/logs superset.db
 ```
 
 - **To START**
@@ -71,9 +72,13 @@ docker compose down
 
 5. Then we can connect to each below respectively:
 - Apache-Airflow: http://localhost:8080
+![Screenshot: Apache Airflow](screenshots/airflow.png)
 - MinIO Console: http://localhost:9090
+![Screenshot: MinIO](screenshots/minio.png)
 - Apache-Drill: http://localhost:8047
+![Screenshot: Apacher Drill](screenshots/drill.png)
 - Apache-Superset: http://localhost:8088
+![Screenshot: Apache Superset](screenshots/superset.png)
 
 ## Resources <a name = "resources"></a>
 
