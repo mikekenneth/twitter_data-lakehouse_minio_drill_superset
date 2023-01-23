@@ -1,4 +1,4 @@
-# Twitter Data Project with Airflow, MinIO, Drill & Superset
+# Building a Data Lakehouse for Analyzing Elon Musk Tweets using MinIO, Apache Airflow, Apache Drill and Apache Superset 
 
 ## Table of Contents
 
