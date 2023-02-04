@@ -1,5 +1,4 @@
 import os
-import json
 import requests
 from uuid import uuid4
 from datetime import datetime
@@ -17,11 +16,10 @@ def get_twitter_data():
 
     url = f"{BASE_URL}?query=from:{USERNAME}&tweet.fields={','.join(FIELDS)}&expansions=author_id&max_results=50"
     response = requests.get(url=url, headers={"Authorization": f"Bearer {TWITTER_BEARER_TOKEN}"})
-    response = json.loads(response.content)
-    print(response)
+    response_content = response.json()
 
-    data = response["data"]
-    includes = response["includes"]
+    data = response_content["data"]
+    includes = response_content["includes"]
     return data, includes
 
 
@@ -29,7 +27,7 @@ def get_twitter_data():
 def clean_twitter_data(tweets_data):
     data, includes = tweets_data
 
-    batchId = str(uuid4()).replace("-", "")
+    batchId = uuid4().hex
     batchDatetime = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
 
     # Refine tweets data
